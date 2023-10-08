@@ -31,7 +31,7 @@ for ((i=0; i<$count; i++)); do
     environment=($(jq -r ".models[$i].environment | keys[]" config.json))
 
     # Add service details to docker-compose.yaml
-    printf "  ${serviceName}:\n    image: ${DOCKER_REGISTRY_URL}/${GITHUB_REPOSITORY_URL}/${serviceName}:latest\n    ports:\n      - ${exposedPort}:${containerPort}" >> docker-compose-independent-generated.yaml
+    printf "  ${serviceName}:\n    image: ${DOCKER_REGISTRY_URL}/${GITHUB_REPOSITORY_URL}/${serviceName}:latest\n    ports:\n      - ${exposedPort}:${containerPort}\n" >> docker-compose-independent-generated.yaml
 
     if [[ countConstraints -gt 0 ]]; then
         printf "    deploy:\n      placement:\n        constraints:\n" >> docker-compose-independent-generated.yaml
