@@ -17,6 +17,7 @@ class Model:
             # Set up service account credentials and other setup tasks
             cls.endpoint = 'https://api.cognitive.microsofttranslator.com/translate?api-version=3.0'
             cls.subscription_key = os.getenv("AZURE_TRANSLATE_KEY")
+            
             cls.headers = {
                 'Ocp-Apim-Subscription-Key': cls.subscription_key,
                 'Content-type': 'application/json',
@@ -36,12 +37,12 @@ class Model:
     @classmethod
     async def update_translation_dictionary(self):
         print("Attempting to fetch translation dictionary...")
-        url = 'https://bff.akai.samagra.io/translationdictionary'
+        url = 'https://bff.v2.akai.samagra.io/translationdictionary/all'
         async with aiohttp.ClientSession() as session:
             async with session.get(url) as response:
                 data = await response.json()
         print(f"Fetched data: {data}")
-        Model.data_dict.update({item['source']: item['translation'] for item in data['data'] if item['use']})
+        Model.data_dict.update({item['source']: item['translation'] for item in data if item['use']})
         print(f"Updated data_dict: {self.data_dict}")
         await asyncio.sleep(10)
 
@@ -72,4 +73,5 @@ class Model:
         return {
             "success": True,
             "translated": translated_text
+           # ,"data_dic" :  'hi  ' + str(self.data_dict)
         }
