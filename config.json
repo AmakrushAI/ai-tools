@@ -71,7 +71,7 @@
       "environment": {},
       "nginx": [],
       "constraints": ["node.role==worker"],
-      "build": false
+      "build": true
     },
     {
       "serviceName": "text_translation_azure_dict",
@@ -82,7 +82,7 @@
         "AZURE_TRANSLATE_KEY": "${AZURE_TRANSLATE_KEY}"
       },
       "nginx": [],
-      "build": false
+      "build": true
     },
     {
       "serviceName": "dict_aug_generate_sent",
@@ -155,7 +155,7 @@
       },
       "nginx": [],
       "constraints": ["node.labels.node_vm_type==gpu"],
-      "build": true
+      "build": false
     }
   ]
 }
