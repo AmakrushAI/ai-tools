@@ -82,7 +82,7 @@
         "AZURE_TRANSLATE_KEY": "${AZURE_TRANSLATE_KEY}"
       },
       "nginx": [],
-      "build": true
+      "build": false
     },
     {
       "serviceName": "dict_aug_generate_sent",
