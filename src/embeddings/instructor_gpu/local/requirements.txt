@@ -5,4 +5,4 @@ InstructorEmbedding
 wget
 pandas
 tqdm
-sentence_transformers
+sentence-transformers==2.2.2
