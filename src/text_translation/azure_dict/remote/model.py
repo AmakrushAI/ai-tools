@@ -17,7 +17,6 @@ class Model:
             # Set up service account credentials and other setup tasks
             cls.endpoint = 'https://api.cognitive.microsofttranslator.com/translate?api-version=3.0'
             cls.subscription_key = os.getenv("AZURE_TRANSLATE_KEY")
-            
             cls.headers = {
                 'Ocp-Apim-Subscription-Key': cls.subscription_key,
                 'Content-type': 'application/json',
@@ -48,13 +47,13 @@ class Model:
 
 
     async def inference(self, request: ModelRequest):
-        # Regenerate the pattern based on updated data_dict
+    # Regenerate the pattern based on updated data_dict
         keys = [re.escape(k) for k in self.data_dict.keys()]
         
         pattern = re.compile('|'.join(keys))
         
         self.data_dict = Model.data_dict
-        # current implementation for or -> en translation only. 
+        # Current implementation for 'or' -> 'en' translation only.
         params = '&to=' + request.target_language
         if not self.data_dict:
             body = [{'text': request.text}]
@@ -66,12 +65,16 @@ class Model:
         else:
             body = [{'text': request.text}]
         
-        request = requests.post(self.endpoint + params, headers=self.headers, data=json.dumps(body))
-        response = request.json()
-        translated_text = response[0]['translations'][0]['text']
+        # Rename the variable to avoid shadowing the 'request' parameter
+        http_response = requests.post(self.endpoint + params, headers=self.headers, data=json.dumps(body))
         
+        response_data = http_response.json()
+        translated_text = response_data[0]['translations'][0]['text']
+
         return {
             "success": True,
-            "translated": translated_text
-           # ,"data_dic" :  'hi  ' + str(self.data_dict)
+            "translated": translated_text,
+            # Include only serializable information about the HTTP response, if needed
+            "response_status": http_response.status_code,
+            # "response_text": http_response.text  # Uncomment if you need the raw response text
         }
