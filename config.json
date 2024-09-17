@@ -37,7 +37,7 @@
       "constraints": ["node.labels.node_vm_type==gpu"],
       "build": false
     },    
-        {
+    {
       "serviceName": "word_score",
       "modelBasePath": "src/search/word_score/local/.",
       "apiBasePath": "/search/word_score/local/",
@@ -45,6 +45,18 @@
       "environment": {},
       "nginx": [],
       "build": false
+    },
+    {
+      "serviceName": "weather_update",
+      "modelBasePath": "src/weather_update/local/.",
+      "apiBasePath": "/weather_update/local/",
+      "containerPort": 8000,
+      "environment": {
+        "HASURA_ADMIN_SECRET": "${HASURA_ADMIN_SECRET}",
+        "AKAI_AUTH_BEARER": "${AKAI_AUTH_BEARER}"
+      },
+      "nginx": [],
+      "build": true
     },
     {
       "serviceName": "spell_check",
